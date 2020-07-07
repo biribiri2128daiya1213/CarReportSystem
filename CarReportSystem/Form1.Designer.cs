@@ -23,6 +23,7 @@
 		/// コード エディターで変更しないでください。
 		/// </summary>
 		private void InitializeComponent() {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
@@ -58,10 +59,13 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.ファイルToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.msNew = new System.Windows.Forms.ToolStripMenuItem();
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
 			((System.ComponentModel.ISupportInitialize)(this.dgvCarReportData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pbCarPicture)).BeginInit();
 			this.makerGroup.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -170,6 +174,7 @@
 			this.rbToyota.Size = new System.Drawing.Size(58, 20);
 			this.rbToyota.TabIndex = 3;
 			this.rbToyota.TabStop = true;
+			this.rbToyota.Tag = "1";
 			this.rbToyota.Text = "トヨタ";
 			this.rbToyota.UseVisualStyleBackColor = true;
 			// 
@@ -182,6 +187,7 @@
 			this.rbNisan.Size = new System.Drawing.Size(58, 20);
 			this.rbNisan.TabIndex = 3;
 			this.rbNisan.TabStop = true;
+			this.rbNisan.Tag = "2";
 			this.rbNisan.Text = "日産";
 			this.rbNisan.UseVisualStyleBackColor = true;
 			// 
@@ -194,6 +200,7 @@
 			this.rbHonda.Size = new System.Drawing.Size(63, 20);
 			this.rbHonda.TabIndex = 3;
 			this.rbHonda.TabStop = true;
+			this.rbHonda.Tag = "3";
 			this.rbHonda.Text = "ホンダ";
 			this.rbHonda.UseVisualStyleBackColor = true;
 			// 
@@ -206,6 +213,7 @@
 			this.rbSubaru.Size = new System.Drawing.Size(65, 20);
 			this.rbSubaru.TabIndex = 3;
 			this.rbSubaru.TabStop = true;
+			this.rbSubaru.Tag = "4";
 			this.rbSubaru.Text = "スバル";
 			this.rbSubaru.UseVisualStyleBackColor = true;
 			// 
@@ -218,6 +226,7 @@
 			this.rbForeignCar.Size = new System.Drawing.Size(58, 20);
 			this.rbForeignCar.TabIndex = 3;
 			this.rbForeignCar.TabStop = true;
+			this.rbForeignCar.Tag = "5";
 			this.rbForeignCar.Text = "外車";
 			this.rbForeignCar.UseVisualStyleBackColor = true;
 			// 
@@ -230,6 +239,7 @@
 			this.rbOther.Size = new System.Drawing.Size(67, 20);
 			this.rbOther.TabIndex = 3;
 			this.rbOther.TabStop = true;
+			this.rbOther.Tag = "6";
 			this.rbOther.Text = "その他";
 			this.rbOther.UseVisualStyleBackColor = true;
 			// 
@@ -258,9 +268,11 @@
 			// 
 			// pbCarPicture
 			// 
+			this.pbCarPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pbCarPicture.Location = new System.Drawing.Point(542, 55);
 			this.pbCarPicture.Name = "pbCarPicture";
 			this.pbCarPicture.Size = new System.Drawing.Size(277, 219);
+			this.pbCarPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pbCarPicture.TabIndex = 6;
 			this.pbCarPicture.TabStop = false;
 			// 
@@ -405,7 +417,7 @@
             this.ファイルToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(831, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(835, 24);
 			this.menuStrip1.TabIndex = 9;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -424,11 +436,31 @@
 			this.msNew.Text = "新規入力";
 			this.msNew.Click += new System.EventHandler(this.msNew_Click);
 			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButton1});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 513);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(835, 22);
+			this.statusStrip1.TabIndex = 10;
+			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// toolStripSplitButton1
+			// 
+			this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
+			this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+			this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 20);
+			this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(831, 513);
+			this.ClientSize = new System.Drawing.Size(835, 535);
+			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.makerGroup);
 			this.Controls.Add(this.btImageDelete);
 			this.Controls.Add(this.button5);
@@ -456,12 +488,15 @@
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "Form1";
 			this.Text = "試乗レポート管理システム";
+			this.Load += new System.EventHandler(this.Form1_Load_1);
 			((System.ComponentModel.ISupportInitialize)(this.dgvCarReportData)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pbCarPicture)).EndInit();
 			this.makerGroup.ResumeLayout(false);
 			this.makerGroup.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -504,6 +539,8 @@
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem ファイルToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem msNew;
+		private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
 	}
 }
 

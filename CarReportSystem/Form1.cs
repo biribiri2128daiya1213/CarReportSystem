@@ -19,14 +19,14 @@ namespace CarReportSystem {
 			InitializeComponent();
 			dgvCarReportData.DataSource = _carReports;
 		}
-		private void Form1_Load(object sender, EventArgs e) {
+		private void Form1_Load_1(object sender, EventArgs e) {
 			//ロード
 			initButton();
 		}
 
 		private void btDataAdd_Click(object sender, EventArgs e) {
 			//データの追加
-			if (cbAuthor.Text != "") {
+			if (cbAuthor.Text != "" && cbCarName.Text != "") {
 				CarReport car = new CarReport {
 					CreatedDate = dtpCreateDate.Value,
 					Author = cbAuthor.Text,
@@ -42,13 +42,13 @@ namespace CarReportSystem {
 				dgvCarReportData.ClearSelection();
 			}
 			else {
-				MessageBox.Show("記録者を入力してください", "エラー",
+				MessageBox.Show("記録者と車名を入力してください", "エラー",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 		private void btDataFix_Click(object sender, EventArgs e) {
 			//データを修正
-			if (cbAuthor.Text != "") {
+			if (cbAuthor.Text != "" && cbCarName.Text != "") {
 				CarReport selectedCar = _carReports[dgvCarReportData.CurrentRow.Index];
 				selectedCar.CreatedDate = dtpCreateDate.Value;
 				selectedCar.Author = cbAuthor.Text;
@@ -59,7 +59,7 @@ namespace CarReportSystem {
 				dgvCarReportData.Refresh();
 			}
 			else {
-				MessageBox.Show("記録者を入力してください", "エラー",
+				MessageBox.Show("記録者と車名を入力してください", "エラー",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
@@ -177,7 +177,7 @@ namespace CarReportSystem {
 			}
 		}
 		private CarMaker SelectedRadioButton() {
-			string maker = "";
+			/*string maker = "";
 			foreach (RadioButton rb in makerGroup.Controls) {
 				if (rb.Checked) {
 					maker = rb.Text;
@@ -198,10 +198,16 @@ namespace CarReportSystem {
 					return CarMaker.その他;
 				default:
 					return CarMaker.DEFAULT;
+			}*/
+			foreach (RadioButton rb in makerGroup.Controls) {
+				if (rb.Checked) {
+					return (CarMaker)int.Parse(rb.Tag.ToString());
+				}
 			}
+			return CarMaker.トヨタ;
 		}
 		private void RefreshRadioButton(CarMaker carMaker) {
-			switch (carMaker) {
+			/*switch (carMaker) {
 				case CarMaker.トヨタ:
 					rbToyota.Checked = true;
 					break;
@@ -223,6 +229,11 @@ namespace CarReportSystem {
 				default:
 					rbToyota.Checked = true;
 					break;
+			}*/
+			foreach (RadioButton item in makerGroup.Controls) {
+				if (carMaker.ToString().Equals(item.Text)) {
+					item.Checked = true;
+				}
 			}
 		}
 
