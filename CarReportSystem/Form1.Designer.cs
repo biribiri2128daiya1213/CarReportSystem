@@ -55,9 +55,13 @@
 			this.ofdImageOpen = new System.Windows.Forms.OpenFileDialog();
 			this.ofdOpenFile = new System.Windows.Forms.OpenFileDialog();
 			this.sfdSaveFile = new System.Windows.Forms.SaveFileDialog();
+			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.ファイルToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.msNew = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.dgvCarReportData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pbCarPicture)).BeginInit();
 			this.makerGroup.SuspendLayout();
+			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -159,6 +163,7 @@
 			// rbToyota
 			// 
 			this.rbToyota.AutoSize = true;
+			this.rbToyota.Checked = true;
 			this.rbToyota.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.rbToyota.Location = new System.Drawing.Point(6, 9);
 			this.rbToyota.Name = "rbToyota";
@@ -244,6 +249,7 @@
 			this.dgvCarReportData.Location = new System.Drawing.Point(119, 309);
 			this.dgvCarReportData.MultiSelect = false;
 			this.dgvCarReportData.Name = "dgvCarReportData";
+			this.dgvCarReportData.ReadOnly = true;
 			this.dgvCarReportData.RowTemplate.Height = 21;
 			this.dgvCarReportData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvCarReportData.Size = new System.Drawing.Size(700, 170);
@@ -393,6 +399,31 @@
 			// 
 			this.sfdSaveFile.FileName = "sfdSaveFile";
 			// 
+			// menuStrip1
+			// 
+			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ファイルToolStripMenuItem});
+			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip1.Name = "menuStrip1";
+			this.menuStrip1.Size = new System.Drawing.Size(831, 24);
+			this.menuStrip1.TabIndex = 9;
+			this.menuStrip1.Text = "menuStrip1";
+			// 
+			// ファイルToolStripMenuItem
+			// 
+			this.ファイルToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.msNew});
+			this.ファイルToolStripMenuItem.Name = "ファイルToolStripMenuItem";
+			this.ファイルToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+			this.ファイルToolStripMenuItem.Text = "ファイル";
+			// 
+			// msNew
+			// 
+			this.msNew.Name = "msNew";
+			this.msNew.Size = new System.Drawing.Size(180, 22);
+			this.msNew.Text = "新規入力";
+			this.msNew.Click += new System.EventHandler(this.msNew_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -421,12 +452,16 @@
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
+			this.Controls.Add(this.menuStrip1);
+			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "Form1";
 			this.Text = "試乗レポート管理システム";
 			((System.ComponentModel.ISupportInitialize)(this.dgvCarReportData)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pbCarPicture)).EndInit();
 			this.makerGroup.ResumeLayout(false);
 			this.makerGroup.PerformLayout();
+			this.menuStrip1.ResumeLayout(false);
+			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -466,6 +501,9 @@
 		private System.Windows.Forms.OpenFileDialog ofdImageOpen;
 		private System.Windows.Forms.OpenFileDialog ofdOpenFile;
 		private System.Windows.Forms.SaveFileDialog sfdSaveFile;
+		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem ファイルToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem msNew;
 	}
 }
 

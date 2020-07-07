@@ -26,36 +26,40 @@ namespace CarReportSystem {
 
 		private void btDataAdd_Click(object sender, EventArgs e) {
 			//データの追加
-			if (cbCarName.Text != "") {
+			if (cbAuthor.Text != "") {
 				CarReport car = new CarReport {
 					CreatedDate = dtpCreateDate.Value,
 					Author = cbAuthor.Text,
-					Maker = CarReport.CarMaker.トヨタ,//修正
+					Maker = SelectedRadioButton(),
 					CarName = cbCarName.Text,
 					Report = tbReport.Text,
 					Picture = pbCarPicture.Image
 				};
 				_carReports.Insert(0, car);
+				dgvCarReportData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+				setComboBoxMaker(cbAuthor.Text, cbCarName.Text);
+				inputItemAllClear();
+				dgvCarReportData.ClearSelection();
 			}
 			else {
-				MessageBox.Show("車名を入力してください", "エラー",
+				MessageBox.Show("記録者を入力してください", "エラー",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 		private void btDataFix_Click(object sender, EventArgs e) {
 			//データを修正
-			if (cbCarName.Text != "") {
+			if (cbAuthor.Text != "") {
 				CarReport selectedCar = _carReports[dgvCarReportData.CurrentRow.Index];
 				selectedCar.CreatedDate = dtpCreateDate.Value;
 				selectedCar.Author = cbAuthor.Text;
-				selectedCar.Maker = CarReport.CarMaker.トヨタ;//修正
+				selectedCar.Maker = SelectedRadioButton();
 				selectedCar.CarName = cbCarName.Text;
 				selectedCar.Report = tbReport.Text;
 				selectedCar.Picture = pbCarPicture.Image;
 				dgvCarReportData.Refresh();
 			}
 			else {
-				MessageBox.Show("車名を入力してください", "エラー",
+				MessageBox.Show("記録者を入力してください", "エラー",
 								MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
@@ -71,7 +75,7 @@ namespace CarReportSystem {
 
 		private void btImageOpen_Click(object sender, EventArgs e) {
 			//Imageのフォルダを開く
-			ofdImageOpen.InitialDirectory = @"C:\Users\infosys\Pictures\Saved Pictures\";
+			ofdImageOpen.InitialDirectory = @"Saved Pictures\";
 
 			if (ofdImageOpen.ShowDialog() == DialogResult.OK) {
 				pbCarPicture.Image = Image.FromFile(ofdImageOpen.FileName);
@@ -86,6 +90,7 @@ namespace CarReportSystem {
 
 		private void btDataOpen_Click(object sender, EventArgs e) {
 			//フォルダを開く
+			ofdOpenFile.InitialDirectory = @"C:\";
 			if (ofdOpenFile.ShowDialog() == DialogResult.OK) {
 				using (FileStream fs = new FileStream(ofdOpenFile.FileName, FileMode.Open)) {
 					try {
@@ -99,7 +104,7 @@ namespace CarReportSystem {
 						//dgvCarData_Click(sender,e);
 					}
 					catch (SerializationException er) {
-						Console.WriteLine("Failed to deserialize. Reason: " + er.Message);
+						Console.WriteLine("エラー" + er.Message);
 						throw;
 					}
 				}
@@ -132,7 +137,7 @@ namespace CarReportSystem {
 			//初期化のメソッド
 			dtpCreateDate.Value = DateTime.Today;
 			cbAuthor.Text = "";
-			rbHonda.Checked = true;
+			rbToyota.Checked = true;
 			cbCarName.Text = "";
 			tbReport.Text = "";
 			pbCarPicture.Image = null;
@@ -163,12 +168,12 @@ namespace CarReportSystem {
 			if (dgvCarReportData.CurrentRow != null) {
 				initButton();
 				CarReport selectedCar = _carReports[dgvCarReportData.CurrentRow.Index];
-				selectedCar.CreatedDate = dtpCreateDate.Value;
-				selectedCar.Author = cbAuthor.Text;
-				selectedCar.Maker = CarReport.CarMaker.トヨタ;//修正
-				selectedCar.CarName = cbCarName.Text;
-				selectedCar.Report = tbReport.Text;
-				selectedCar.Picture = pbCarPicture.Image;
+				dtpCreateDate.Value = selectedCar.CreatedDate;
+				cbAuthor.Text = selectedCar.Author;
+				RefreshRadioButton(selectedCar.Maker);
+				cbCarName.Text = selectedCar.CarName;
+				tbReport.Text = selectedCar.Report;
+				pbCarPicture.Image = selectedCar.Picture;
 			}
 		}
 		private CarMaker SelectedRadioButton() {
@@ -194,6 +199,37 @@ namespace CarReportSystem {
 				default:
 					return CarMaker.DEFAULT;
 			}
+		}
+		private void RefreshRadioButton(CarMaker carMaker) {
+			switch (carMaker) {
+				case CarMaker.トヨタ:
+					rbToyota.Checked = true;
+					break;
+				case CarMaker.日産:
+					rbNisan.Checked = true;
+					break;
+				case CarMaker.ホンダ:
+					rbHonda.Checked = true;
+					break;
+				case CarMaker.スバル:
+					rbSubaru.Checked = true;
+					break;
+				case CarMaker.外車:
+					rbForeignCar.Checked = true;
+					break;
+				case CarMaker.その他:
+					rbOther.Checked = true;
+					break;
+				default:
+					rbToyota.Checked = true;
+					break;
+			}
+		}
+
+		private void msNew_Click(object sender, EventArgs e) {
+			inputItemAllClear();
+			_carReports.Clear();
+			initButton();
 		}
 	}
 }
