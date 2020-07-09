@@ -23,6 +23,7 @@ namespace CarReportSystem {
 			//ロード
 			initButton();
 			SaveButton();
+			ImageButton();
 			tsslNowTime.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
 			timer1.Interval = 500;
 			Environment.CurrentDirectory = @"C:\Users\infosys\Pictures\";
@@ -86,18 +87,19 @@ namespace CarReportSystem {
 
 			if (ofdImageOpen.ShowDialog() == DialogResult.OK) {
 				pbCarPicture.Image = Image.FromFile(ofdImageOpen.FileName);
+				ImageButton();
 			}
 
 			ofdImageOpen.Dispose();
 		}
 		private void btImageDelete_Click(object sender, EventArgs e) {
 			//写真の削除
-			if (pbCarPicture.Image != null) {
-				if (MessageBox.Show("本当に削除しますか？", "確認",
-							MessageBoxButtons.YesNo) == DialogResult.Yes) {
-					pbCarPicture.Image = null;
-				}
+			if (MessageBox.Show("本当に削除しますか？", "確認",
+						MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				pbCarPicture.Image = null;
+				ImageButton();
 			}
+			
 		}
 
 		private void btDataOpen_Click(object sender, EventArgs e) {
@@ -174,6 +176,14 @@ namespace CarReportSystem {
 			}
 			else {
 				msSave.Enabled = true;
+			}
+		}
+		private void ImageButton() {
+			if (pbCarPicture.Image != null) {
+				btImageDelete.Enabled = true;
+			}
+			else{
+				btImageDelete.Enabled = false;
 			}
 		}
 
