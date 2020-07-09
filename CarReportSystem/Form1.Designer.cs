@@ -23,7 +23,7 @@
 		/// コード エディターで変更しないでください。
 		/// </summary>
 		private void InitializeComponent() {
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+			this.components = new System.ComponentModel.Container();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
@@ -59,8 +59,12 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.ファイルToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.msNew = new System.Windows.Forms.ToolStripMenuItem();
+			this.msOpen = new System.Windows.Forms.ToolStripMenuItem();
+			this.msSave = new System.Windows.Forms.ToolStripMenuItem();
+			this.msNamedSave = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+			this.tsslNowTime = new System.Windows.Forms.ToolStripStatusLabel();
+			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.dgvCarReportData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pbCarPicture)).BeginInit();
 			this.makerGroup.SuspendLayout();
@@ -399,18 +403,6 @@
 			this.makerGroup.TabStop = false;
 			this.makerGroup.Text = "makerGroup";
 			// 
-			// ofdImageOpen
-			// 
-			this.ofdImageOpen.FileName = "ofdImageOpen";
-			// 
-			// ofdOpenFile
-			// 
-			this.ofdOpenFile.FileName = "ofdOpenFile";
-			// 
-			// sfdSaveFile
-			// 
-			this.sfdSaveFile.FileName = "sfdSaveFile";
-			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -424,7 +416,10 @@
 			// ファイルToolStripMenuItem
 			// 
 			this.ファイルToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.msNew});
+            this.msNew,
+            this.msOpen,
+            this.msSave,
+            this.msNamedSave});
 			this.ファイルToolStripMenuItem.Name = "ファイルToolStripMenuItem";
 			this.ファイルToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
 			this.ファイルToolStripMenuItem.Text = "ファイル";
@@ -432,28 +427,53 @@
 			// msNew
 			// 
 			this.msNew.Name = "msNew";
-			this.msNew.Size = new System.Drawing.Size(180, 22);
+			this.msNew.Size = new System.Drawing.Size(257, 22);
 			this.msNew.Text = "新規入力";
 			this.msNew.Click += new System.EventHandler(this.msNew_Click);
+			// 
+			// msOpen
+			// 
+			this.msOpen.Name = "msOpen";
+			this.msOpen.Size = new System.Drawing.Size(257, 22);
+			this.msOpen.Text = "開く(&O)...";
+			this.msOpen.Click += new System.EventHandler(this.msOpen_Click);
+			// 
+			// msSave
+			// 
+			this.msSave.Name = "msSave";
+			this.msSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+			this.msSave.Size = new System.Drawing.Size(257, 22);
+			this.msSave.Text = "保存(&S)";
+			this.msSave.Click += new System.EventHandler(this.msSave_Click);
+			// 
+			// msNamedSave
+			// 
+			this.msNamedSave.Name = "msNamedSave";
+			this.msNamedSave.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+			this.msNamedSave.Size = new System.Drawing.Size(257, 22);
+			this.msNamedSave.Text = "名前を付けて保存(&A)...";
+			this.msNamedSave.Click += new System.EventHandler(this.msNamedSave_Click);
 			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSplitButton1});
+            this.tsslNowTime});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 513);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(835, 22);
 			this.statusStrip1.TabIndex = 10;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
-			// toolStripSplitButton1
+			// tsslNowTime
 			// 
-			this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
-			this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-			this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 20);
-			this.toolStripSplitButton1.Text = "toolStripSplitButton1";
+			this.tsslNowTime.Name = "tsslNowTime";
+			this.tsslNowTime.Size = new System.Drawing.Size(74, 17);
+			this.tsslNowTime.Text = "tsslNowTime";
+			// 
+			// timer1
+			// 
+			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// Form1
 			// 
@@ -540,7 +560,11 @@
 		private System.Windows.Forms.ToolStripMenuItem ファイルToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem msNew;
 		private System.Windows.Forms.StatusStrip statusStrip1;
-		private System.Windows.Forms.ToolStripSplitButton toolStripSplitButton1;
+		private System.Windows.Forms.ToolStripStatusLabel tsslNowTime;
+		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.ToolStripMenuItem msOpen;
+		private System.Windows.Forms.ToolStripMenuItem msSave;
+		private System.Windows.Forms.ToolStripMenuItem msNamedSave;
 	}
 }
 

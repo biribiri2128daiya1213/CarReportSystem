@@ -22,13 +22,18 @@ namespace CarReportSystem {
 		private void Form1_Load_1(object sender, EventArgs e) {
 			//ロード
 			initButton();
+			SaveButton();
+			tsslNowTime.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
+			timer1.Interval = 500;
+			Environment.CurrentDirectory = @"C:\Users\infosys\Pictures\";
+			//timer1.Start();
 		}
 
 		private void btDataAdd_Click(object sender, EventArgs e) {
 			//データの追加
 			if (cbAuthor.Text != "" && cbCarName.Text != "") {
 				CarReport car = new CarReport {
-					CreatedDate = dtpCreateDate.Value,
+					CreatedDate = dtpCreateDate.Value.Date,
 					Author = cbAuthor.Text,
 					Maker = SelectedRadioButton(),
 					CarName = cbCarName.Text,
@@ -50,7 +55,7 @@ namespace CarReportSystem {
 			//データを修正
 			if (cbAuthor.Text != "" && cbCarName.Text != "") {
 				CarReport selectedCar = _carReports[dgvCarReportData.CurrentRow.Index];
-				selectedCar.CreatedDate = dtpCreateDate.Value;
+				selectedCar.CreatedDate = dtpCreateDate.Value.Date;
 				selectedCar.Author = cbAuthor.Text;
 				selectedCar.Maker = SelectedRadioButton();
 				selectedCar.CarName = cbCarName.Text;
@@ -75,7 +80,7 @@ namespace CarReportSystem {
 
 		private void btImageOpen_Click(object sender, EventArgs e) {
 			//Imageのフォルダを開く
-			ofdImageOpen.InitialDirectory = @"Saved Pictures\";
+			ofdImageOpen.InitialDirectory = Path.GetFullPath(@"Saved Pictures\");
 
 			if (ofdImageOpen.ShowDialog() == DialogResult.OK) {
 				pbCarPicture.Image = Image.FromFile(ofdImageOpen.FileName);
@@ -85,7 +90,10 @@ namespace CarReportSystem {
 		}
 		private void btImageDelete_Click(object sender, EventArgs e) {
 			//写真の削除
-			pbCarPicture.Image = null;
+			if (MessageBox.Show("本当に削除しますか？", "確認",
+						MessageBoxButtons.YesNo) == DialogResult.Yes) {
+				pbCarPicture.Image = null;
+			}
 		}
 
 		private void btDataOpen_Click(object sender, EventArgs e) {
@@ -101,6 +109,8 @@ namespace CarReportSystem {
 						setComboBoxMaker(cbAuthor.Text, cbCarName.Text);
 						inputItemAllClear();
 						dgvCarReportData.ClearSelection();
+						sfdSaveFile.FileName = ofdOpenFile.FileName;
+						SaveButton();
 						//dgvCarData_Click(sender,e);
 					}
 					catch (SerializationException er) {
@@ -119,6 +129,7 @@ namespace CarReportSystem {
 				using (FileStream fs = new FileStream(sfdSaveFile.FileName, FileMode.Create)) {
 					try {
 						formatter.Serialize(fs, _carReports);
+						SaveButton();
 					}
 					catch (SerializationException er) {
 						Console.WriteLine("エラー" + er.Message);
@@ -153,15 +164,23 @@ namespace CarReportSystem {
 				btDataFix.Enabled = true;
 			}
 		}
+		private void SaveButton() {
+			if (sfdSaveFile.FileName == "") {
+				msSave.Enabled = false;
+			}
+			else {
+				msSave.Enabled = true;
+			}
+		}
 
 		private void setComboBoxMaker(string author, string carName) {
-			//コンボボックスの履歴
-			if (!cbAuthor.Items.Contains(author)) {
-				cbAuthor.Items.Add(author);
-			}
-			if (!cbCarName.Items.Contains(carName)) {
-				cbCarName.Items.Add(carName);
-			}
+		//コンボボックスの履歴
+		if (!cbAuthor.Items.Contains(author)) {
+			cbAuthor.Items.Add(author);
+		}
+		if (!cbCarName.Items.Contains(carName)) {
+			cbCarName.Items.Add(carName);
+		}
 		}
 
 		private void dgvCarReportData_Click(object sender, EventArgs e) {
@@ -238,9 +257,36 @@ namespace CarReportSystem {
 		}
 
 		private void msNew_Click(object sender, EventArgs e) {
+			//新規作成
 			inputItemAllClear();
 			_carReports.Clear();
 			initButton();
 		}
+		private void msOpen_Click(object sender, EventArgs e) {
+			//メニューストリップの開く
+			btDataOpen_Click(sender, e);
+		}
+		private void msSave_Click(object sender, EventArgs e) {
+			//メニューストリップの保存
+			BinaryFormatter formatter = new BinaryFormatter();
+				using (FileStream fs = new FileStream(sfdSaveFile.FileName, FileMode.Create)) {
+					try {
+						formatter.Serialize(fs, _carReports);
+					}
+					catch (SerializationException er) {
+						Console.WriteLine("エラー" + er.Message);
+						throw;
+					}
+				}
+		}
+		private void msNamedSave_Click(object sender, EventArgs e) {
+			//メニューストリップの名前つけて保存
+			btDataSave_Click(sender, e);
+		}
+		private void timer1_Tick(object sender, EventArgs e) {
+			tsslNowTime.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
+		}
+
+		
 	}
 }
