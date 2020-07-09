@@ -45,6 +45,8 @@ namespace CarReportSystem {
 				setComboBoxMaker(cbAuthor.Text, cbCarName.Text);
 				inputItemAllClear();
 				dgvCarReportData.ClearSelection();
+				btDataDelete.Enabled = false;
+				btDataFix.Enabled = false;
 			}
 			else {
 				MessageBox.Show("記録者と車名を入力してください", "エラー",
