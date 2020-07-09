@@ -92,9 +92,11 @@ namespace CarReportSystem {
 		}
 		private void btImageDelete_Click(object sender, EventArgs e) {
 			//写真の削除
-			if (MessageBox.Show("本当に削除しますか？", "確認",
-						MessageBoxButtons.YesNo) == DialogResult.Yes) {
-				pbCarPicture.Image = null;
+			if (pbCarPicture.Image != null) {
+				if (MessageBox.Show("本当に削除しますか？", "確認",
+							MessageBoxButtons.YesNo) == DialogResult.Yes) {
+					pbCarPicture.Image = null;
+				}
 			}
 		}
 
