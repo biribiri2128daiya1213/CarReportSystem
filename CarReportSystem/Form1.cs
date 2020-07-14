@@ -17,7 +17,7 @@ namespace CarReportSystem {
 		BindingList<CarReport> _carReports = new BindingList<CarReport>();
 		public Form1() {
 			InitializeComponent();
-			dgvCarReportData.DataSource = _carReports;
+			//dgvCarReportData.DataSource = _carReports;
 		}
 		private void Form1_Load_1(object sender, EventArgs e) {
 			//ロード
@@ -27,6 +27,7 @@ namespace CarReportSystem {
 			tsslNowTime.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm");
 			timer1.Interval = 500;
 			Environment.CurrentDirectory = @"C:\Users\infosys\Pictures\";
+			dgvCarReportData.Columns[0].Visible = false;
 			//timer1.Start();
 		}
 
@@ -103,28 +104,8 @@ namespace CarReportSystem {
 		}
 
 		private void btDataOpen_Click(object sender, EventArgs e) {
-			//フォルダを開く
-			ofdOpenFile.InitialDirectory = @"C:\";
-			if (ofdOpenFile.ShowDialog() == DialogResult.OK) {
-				using (FileStream fs = new FileStream(ofdOpenFile.FileName, FileMode.Open)) {
-					try {
-						BinaryFormatter formatter = new BinaryFormatter();
-
-						_carReports = (BindingList<CarReport>)formatter.Deserialize(fs);
-						dgvCarReportData.DataSource = _carReports;
-						setComboBoxMaker(cbAuthor.Text, cbCarName.Text);
-						inputItemAllClear();
-						dgvCarReportData.ClearSelection();
-						sfdSaveFile.FileName = ofdOpenFile.FileName;
-						SaveButton();
-						//dgvCarData_Click(sender,e);
-					}
-					catch (SerializationException er) {
-						Console.WriteLine("エラー" + er.Message);
-						throw;
-					}
-				}
-			}
+			this.carReportTableAdapter.Fill(this.infosys202028DataSetCarReport.CarReport);
+			
 		}
 
 		private void btDataSave_Click(object sender, EventArgs e) {
@@ -198,16 +179,12 @@ namespace CarReportSystem {
 		}
 
 		private void dgvCarReportData_Click(object sender, EventArgs e) {
-			if (dgvCarReportData.CurrentRow != null) {
-				initButton();
-				CarReport selectedCar = _carReports[dgvCarReportData.CurrentRow.Index];
-				dtpCreateDate.Value = selectedCar.CreatedDate;
-				cbAuthor.Text = selectedCar.Author;
-				RefreshRadioButton(selectedCar.Maker);
-				cbCarName.Text = selectedCar.CarName;
-				tbReport.Text = selectedCar.Report;
-				pbCarPicture.Image = selectedCar.Picture;
-			}
+			dtpCreateDate.Value = (DateTime)dgvCarReportData.CurrentRow.Cells[1].Value;
+			cbAuthor.Text = dgvCarReportData.CurrentRow.Cells[2].Value.ToString();
+			RefreshRadioButton((CarMaker)dgvCarReportData.CurrentRow.Cells[3].Value);
+			cbCarName.Text = dgvCarReportData.CurrentRow.Cells[4].Value.ToString();
+			tbReport.Text = dgvCarReportData.CurrentRow.Cells[5].Value.ToString();
+			//pbCarPicture = dgvCarReportData.CurrentRow.Cells[2];
 		}
 		private CarMaker SelectedRadioButton() {
 			/*string maker = "";
