@@ -32,6 +32,8 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.dtpCreateDate = new System.Windows.Forms.DateTimePicker();
+			this.carReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.infosys202028DataSetCarReport = new CarReportSystem.infosys202028DataSetCarReport();
 			this.cbAuthor = new System.Windows.Forms.ComboBox();
 			this.cbCarName = new System.Windows.Forms.ComboBox();
 			this.rbToyota = new System.Windows.Forms.RadioButton();
@@ -42,6 +44,13 @@
 			this.rbOther = new System.Windows.Forms.RadioButton();
 			this.tbReport = new System.Windows.Forms.TextBox();
 			this.dgvCarReportData = new System.Windows.Forms.DataGridView();
+			this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.createDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.authorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.makerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.reportDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.pictureDataGridViewImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
 			this.pbCarPicture = new System.Windows.Forms.PictureBox();
 			this.btImageOpen = new System.Windows.Forms.Button();
 			this.btImageDelete = new System.Windows.Forms.Button();
@@ -65,24 +74,15 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.tsslNowTime = new System.Windows.Forms.ToolStripStatusLabel();
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
-			this.infosys202028DataSetCarReport = new CarReportSystem.infosys202028DataSetCarReport();
-			this.carReportBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.carReportTableAdapter = new CarReportSystem.infosys202028DataSetCarReportTableAdapters.CarReportTableAdapter();
 			this.tableAdapterManager = new CarReportSystem.infosys202028DataSetCarReportTableAdapters.TableAdapterManager();
-			this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.createDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.authorDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.makerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.reportDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.pictureDataGridViewImageColumn = new System.Windows.Forms.DataGridViewImageColumn();
+			((System.ComponentModel.ISupportInitialize)(this.carReportBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.infosys202028DataSetCarReport)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgvCarReportData)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pbCarPicture)).BeginInit();
 			this.makerGroup.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.infosys202028DataSetCarReport)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.carReportBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -163,6 +163,16 @@
 			this.dtpCreateDate.Name = "dtpCreateDate";
 			this.dtpCreateDate.Size = new System.Drawing.Size(200, 23);
 			this.dtpCreateDate.TabIndex = 1;
+			// 
+			// carReportBindingSource
+			// 
+			this.carReportBindingSource.DataMember = "CarReport";
+			this.carReportBindingSource.DataSource = this.infosys202028DataSetCarReport;
+			// 
+			// infosys202028DataSetCarReport
+			// 
+			this.infosys202028DataSetCarReport.DataSetName = "infosys202028DataSetCarReport";
+			this.infosys202028DataSetCarReport.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
 			// cbAuthor
 			// 
@@ -293,6 +303,62 @@
 			this.dgvCarReportData.Size = new System.Drawing.Size(700, 170);
 			this.dgvCarReportData.TabIndex = 5;
 			this.dgvCarReportData.Click += new System.EventHandler(this.dgvCarReportData_Click);
+			// 
+			// idDataGridViewTextBoxColumn
+			// 
+			this.idDataGridViewTextBoxColumn.DataPropertyName = "id";
+			this.idDataGridViewTextBoxColumn.HeaderText = "id";
+			this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+			this.idDataGridViewTextBoxColumn.ReadOnly = true;
+			this.idDataGridViewTextBoxColumn.Width = 94;
+			// 
+			// createDateDataGridViewTextBoxColumn
+			// 
+			this.createDateDataGridViewTextBoxColumn.DataPropertyName = "CreateDate";
+			this.createDateDataGridViewTextBoxColumn.HeaderText = "CreateDate";
+			this.createDateDataGridViewTextBoxColumn.Name = "createDateDataGridViewTextBoxColumn";
+			this.createDateDataGridViewTextBoxColumn.ReadOnly = true;
+			this.createDateDataGridViewTextBoxColumn.Width = 94;
+			// 
+			// authorDataGridViewTextBoxColumn
+			// 
+			this.authorDataGridViewTextBoxColumn.DataPropertyName = "Author";
+			this.authorDataGridViewTextBoxColumn.HeaderText = "Author";
+			this.authorDataGridViewTextBoxColumn.Name = "authorDataGridViewTextBoxColumn";
+			this.authorDataGridViewTextBoxColumn.ReadOnly = true;
+			this.authorDataGridViewTextBoxColumn.Width = 94;
+			// 
+			// makerDataGridViewTextBoxColumn
+			// 
+			this.makerDataGridViewTextBoxColumn.DataPropertyName = "Maker";
+			this.makerDataGridViewTextBoxColumn.HeaderText = "Maker";
+			this.makerDataGridViewTextBoxColumn.Name = "makerDataGridViewTextBoxColumn";
+			this.makerDataGridViewTextBoxColumn.ReadOnly = true;
+			this.makerDataGridViewTextBoxColumn.Width = 93;
+			// 
+			// nameDataGridViewTextBoxColumn
+			// 
+			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+			this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+			this.nameDataGridViewTextBoxColumn.Width = 94;
+			// 
+			// reportDataGridViewTextBoxColumn
+			// 
+			this.reportDataGridViewTextBoxColumn.DataPropertyName = "Report";
+			this.reportDataGridViewTextBoxColumn.HeaderText = "Report";
+			this.reportDataGridViewTextBoxColumn.Name = "reportDataGridViewTextBoxColumn";
+			this.reportDataGridViewTextBoxColumn.ReadOnly = true;
+			this.reportDataGridViewTextBoxColumn.Width = 94;
+			// 
+			// pictureDataGridViewImageColumn
+			// 
+			this.pictureDataGridViewImageColumn.DataPropertyName = "Picture";
+			this.pictureDataGridViewImageColumn.HeaderText = "Picture";
+			this.pictureDataGridViewImageColumn.Name = "pictureDataGridViewImageColumn";
+			this.pictureDataGridViewImageColumn.ReadOnly = true;
+			this.pictureDataGridViewImageColumn.Width = 94;
 			// 
 			// pbCarPicture
 			// 
@@ -500,16 +566,6 @@
 			// 
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
-			// infosys202028DataSetCarReport
-			// 
-			this.infosys202028DataSetCarReport.DataSetName = "infosys202028DataSetCarReport";
-			this.infosys202028DataSetCarReport.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-			// 
-			// carReportBindingSource
-			// 
-			this.carReportBindingSource.DataMember = "CarReport";
-			this.carReportBindingSource.DataSource = this.infosys202028DataSetCarReport;
-			// 
 			// carReportTableAdapter
 			// 
 			this.carReportTableAdapter.ClearBeforeFill = true;
@@ -519,55 +575,6 @@
 			this.tableAdapterManager.BackupDataSetBeforeUpdate = false;
 			this.tableAdapterManager.CarReportTableAdapter = this.carReportTableAdapter;
 			this.tableAdapterManager.UpdateOrder = CarReportSystem.infosys202028DataSetCarReportTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
-			// 
-			// idDataGridViewTextBoxColumn
-			// 
-			this.idDataGridViewTextBoxColumn.DataPropertyName = "id";
-			this.idDataGridViewTextBoxColumn.HeaderText = "id";
-			this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-			this.idDataGridViewTextBoxColumn.ReadOnly = true;
-			// 
-			// createDateDataGridViewTextBoxColumn
-			// 
-			this.createDateDataGridViewTextBoxColumn.DataPropertyName = "CreateDate";
-			this.createDateDataGridViewTextBoxColumn.HeaderText = "CreateDate";
-			this.createDateDataGridViewTextBoxColumn.Name = "createDateDataGridViewTextBoxColumn";
-			this.createDateDataGridViewTextBoxColumn.ReadOnly = true;
-			// 
-			// authorDataGridViewTextBoxColumn
-			// 
-			this.authorDataGridViewTextBoxColumn.DataPropertyName = "Author";
-			this.authorDataGridViewTextBoxColumn.HeaderText = "Author";
-			this.authorDataGridViewTextBoxColumn.Name = "authorDataGridViewTextBoxColumn";
-			this.authorDataGridViewTextBoxColumn.ReadOnly = true;
-			// 
-			// makerDataGridViewTextBoxColumn
-			// 
-			this.makerDataGridViewTextBoxColumn.DataPropertyName = "Maker";
-			this.makerDataGridViewTextBoxColumn.HeaderText = "Maker";
-			this.makerDataGridViewTextBoxColumn.Name = "makerDataGridViewTextBoxColumn";
-			this.makerDataGridViewTextBoxColumn.ReadOnly = true;
-			// 
-			// nameDataGridViewTextBoxColumn
-			// 
-			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-			this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-			// 
-			// reportDataGridViewTextBoxColumn
-			// 
-			this.reportDataGridViewTextBoxColumn.DataPropertyName = "Report";
-			this.reportDataGridViewTextBoxColumn.HeaderText = "Report";
-			this.reportDataGridViewTextBoxColumn.Name = "reportDataGridViewTextBoxColumn";
-			this.reportDataGridViewTextBoxColumn.ReadOnly = true;
-			// 
-			// pictureDataGridViewImageColumn
-			// 
-			this.pictureDataGridViewImageColumn.DataPropertyName = "Picture";
-			this.pictureDataGridViewImageColumn.HeaderText = "Picture";
-			this.pictureDataGridViewImageColumn.Name = "pictureDataGridViewImageColumn";
-			this.pictureDataGridViewImageColumn.ReadOnly = true;
 			// 
 			// Form1
 			// 
@@ -603,6 +610,8 @@
 			this.Name = "Form1";
 			this.Text = "試乗レポート管理システム";
 			this.Load += new System.EventHandler(this.Form1_Load_1);
+			((System.ComponentModel.ISupportInitialize)(this.carReportBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.infosys202028DataSetCarReport)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.dgvCarReportData)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pbCarPicture)).EndInit();
 			this.makerGroup.ResumeLayout(false);
@@ -611,8 +620,6 @@
 			this.menuStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.infosys202028DataSetCarReport)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.carReportBindingSource)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
