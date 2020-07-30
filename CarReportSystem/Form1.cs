@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static CarReportSystem.CarReport;
 
 namespace CarReportSystem {
 	public partial class Form1 : Form {
@@ -25,22 +19,14 @@ namespace CarReportSystem {
 			timer1.Interval = 500;
 			Environment.CurrentDirectory = @"C:\Users\infosys\Pictures\";
 			dgvCarReportData.Columns[0].Visible = false;
+			dtpSearchCreateDate.Enabled = false;
+			//dgvCarReportData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 			timer1.Start();
 		}
 
 		private void btDataAdd_Click(object sender, EventArgs e) {
 			/*//データの追加
 			if (cbAuthor.Text != "" && cbCarName.Text != "") {
-				CarReport car = new CarReport {
-					CreatedDate = dtpCreateDate.Value.Date,
-					Author = cbAuthor.Text,
-					Maker = SelectedRadioButton(),
-					CarName = cbCarName.Text,
-					Report = tbReport.Text,
-					Picture = pbCarPicture.Image
-				};
-				
-				_carReports.Add(car);
 				dgvCarReportData.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 				setComboBoxMaker(cbAuthor.Text, cbCarName.Text);
 				inputItemAllClear();
@@ -61,8 +47,16 @@ namespace CarReportSystem {
 				dgvCarReportData.CurrentRow.Cells[3].Value = SelectedRadioButton();
 				dgvCarReportData.CurrentRow.Cells[4].Value = cbCarName.Text;
 				dgvCarReportData.CurrentRow.Cells[5].Value = tbReport.Text;
-				dgvCarReportData.CurrentRow.Cells[6].Value = ImageToByteArray(pbCarPicture.Image);
+				if (pbCarPicture.Image != null) {
+					dgvCarReportData.CurrentRow.Cells[6].Value = ImageToByteArray(pbCarPicture.Image);
+				}
+				else {
+					dgvCarReportData.CurrentRow.Cells[6].Value = null;
+				}
 				dgvCarReportData.Refresh();
+				this.Validate();
+				this.carReportBindingSource.EndEdit();
+				this.tableAdapterManager.UpdateAll(this.infosys202028DataSetCarReport);
 			}
 			else {
 				MessageBox.Show("記録者と車名を入力してください", "エラー",
@@ -94,12 +88,18 @@ namespace CarReportSystem {
 						MessageBoxButtons.YesNo) == DialogResult.Yes) {
 				pbCarPicture.Image = null;
 			}
-			
+
+		}
+
+		private void btSearchExe_Click(object sender, EventArgs e) {
+			//検索
+			SearchText(sender, e);
 		}
 
 		private void btDataOpen_Click(object sender, EventArgs e) {
+			//データベースに接続
 			this.carReportTableAdapter.Fill(this.infosys202028DataSetCarReport.CarReport);
-			
+			dgvCarReportData_Click(sender, e);
 		}
 
 		private void btDataSave_Click(object sender, EventArgs e) {
@@ -107,6 +107,7 @@ namespace CarReportSystem {
 			this.Validate();
 			this.carReportBindingSource.EndEdit();
 			this.tableAdapterManager.UpdateAll(this.infosys202028DataSetCarReport);
+
 		}
 
 		private void btExit_Click(object sender, EventArgs e) {
@@ -125,26 +126,31 @@ namespace CarReportSystem {
 		}
 
 		private void setComboBoxMaker(string author, string carName) {
-		//コンボボックスの履歴
-		if (!cbAuthor.Items.Contains(author)) {
-			cbAuthor.Items.Add(author);
-		}
-		if (!cbCarName.Items.Contains(carName)) {
-			cbCarName.Items.Add(carName);
-		}
+			//コンボボックスの履歴
+			if (!cbAuthor.Items.Contains(author)) {
+				cbAuthor.Items.Add(author);
+			}
+			if (!cbCarName.Items.Contains(carName)) {
+				cbCarName.Items.Add(carName);
+			}
 		}
 
 		private void dgvCarReportData_Click(object sender, EventArgs e) {
-
-			dtpCreateDate.Value = (DateTime)dgvCarReportData.CurrentRow.Cells[1].Value;
-			cbAuthor.Text = dgvCarReportData.CurrentRow.Cells[2].Value.ToString();
-			RefreshRadioButton(dgvCarReportData.CurrentRow.Cells[3].Value.ToString());
-			cbCarName.Text = dgvCarReportData.CurrentRow.Cells[4].Value.ToString();
-			tbReport.Text = dgvCarReportData.CurrentRow.Cells[5].Value.ToString();
-			//if (dgvCarReportData.CurrentRow.Cells[6].Value == null) {
-				//pbCarPicture.Image = (Image)dgvCarReportData.CurrentRow.Cells[6].Value;
-			//}
+			if (dgvCarReportData.Rows.Count != 0) {
+				dtpCreateDate.Value = (DateTime)dgvCarReportData.CurrentRow.Cells[1].Value;
+				cbAuthor.Text = dgvCarReportData.CurrentRow.Cells[2].Value.ToString();
+				RefreshRadioButton(dgvCarReportData.CurrentRow.Cells[3].Value.ToString());
+				cbCarName.Text = dgvCarReportData.CurrentRow.Cells[4].Value.ToString();
+				tbReport.Text = dgvCarReportData.CurrentRow.Cells[5].Value.ToString();
+				if (dgvCarReportData.CurrentRow.Cells[6].Value != DBNull.Value) {
+					pbCarPicture.Image = ByteArrayToImage((byte[])dgvCarReportData.CurrentRow.Cells[6].Value);
+				}
+				else {
+					dgvCarReportData.CurrentRow.Cells[6].Value = null;
+				}
+			}
 		}
+
 		private string SelectedRadioButton() {
 			foreach (RadioButton rb in makerGroup.Controls) {
 				if (rb.Checked) {
@@ -174,15 +180,15 @@ namespace CarReportSystem {
 		private void msSave_Click(object sender, EventArgs e) {
 			//メニューストリップの保存
 			BinaryFormatter formatter = new BinaryFormatter();
-				using (FileStream fs = new FileStream(sfdSaveFile.FileName, FileMode.Create)) {
-					try {
-						formatter.Serialize(fs, _carReports);
-					}
-					catch (SerializationException er) {
-						Console.WriteLine("エラー" + er.Message);
-						throw;
-					}
+			using (FileStream fs = new FileStream(sfdSaveFile.FileName, FileMode.Create)) {
+				try {
+					formatter.Serialize(fs, _carReports);
 				}
+				catch (SerializationException er) {
+					Console.WriteLine("エラー" + er.Message);
+					throw;
+				}
+			}
 		}
 		private void msNamedSave_Click(object sender, EventArgs e) {
 			//メニューストリップの名前つけて保存
@@ -204,6 +210,49 @@ namespace CarReportSystem {
 			ImageConverter imgconv = new ImageConverter();
 			byte[] byteData = (byte[])imgconv.ConvertTo(img, typeof(byte[]));
 			return byteData;
+		}
+
+		private void dgvCarReportData_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) {
+			if (dgvCarReportData.Rows.Count != 0) {
+				dgvCarReportData_Click(sender, e);
+			}
+		}
+
+		private void SearchText(object sender, EventArgs e) {
+			if (cbSearchCreateDate.Checked) {
+				if (rbAND.Checked) {
+					this.carReportTableAdapter.FillByCarANDSearch
+						(this.infosys202028DataSetCarReport.CarReport,
+						dtpSearchCreateDate.Value.ToString(), tbSearchAuthor.Text, cbSearchMaker.Text, tbSearchCarName.Text);
+				}
+				else {
+					this.carReportTableAdapter.FillByCarORSearch
+						(this.infosys202028DataSetCarReport.CarReport,
+						dtpSearchCreateDate.Value.ToString(), tbSearchAuthor.Text, cbSearchMaker.Text, tbSearchCarName.Text);
+				}
+			}
+			else {
+				if (rbAND.Checked) {
+					this.carReportTableAdapter.FillByANDSearchNoDate
+						(this.infosys202028DataSetCarReport.CarReport,
+						tbSearchAuthor.Text, cbSearchMaker.Text, tbSearchCarName.Text);
+				}
+				else {
+					this.carReportTableAdapter.FillByORSearchNoDate
+						(this.infosys202028DataSetCarReport.CarReport,
+						tbSearchAuthor.Text, cbSearchMaker.Text, tbSearchCarName.Text);
+				}
+			}
+			dgvCarReportData_Click(sender, e);
+		}
+
+		private void cbSearchCreateDate_CheckedChanged(object sender, EventArgs e) {
+			if (cbSearchCreateDate.Checked) {
+				dtpSearchCreateDate.Enabled = true;
+			}
+			else {
+				dtpSearchCreateDate.Enabled = false;
+			}
 		}
 	}
 }
